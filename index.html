@@ -8,15 +8,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f4c81'/%3E%3Cstop offset='1' stop-color='%231878c8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Segoe UI,Arial,sans-serif' font-size='36' font-weight='800' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0d3a63, #1878c8) fixed; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #05080d; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
   #mx { position: fixed; inset: 0; z-index: 0; }
-  .card { position: relative; z-index: 1; background: #fff; border-radius: 18px; padding: 40px 46px; text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.55); max-width: 420px; }
+  .card { position: relative; z-index: 1; background: #0e1520; border: 1px solid #263447; border-radius: 18px; padding: 40px 46px; text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.75); max-width: 420px; }
   .logo { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, #0f4c81, #1878c8); color: #fff; font-size: 34px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-  h1 { font-size: 24px; color: #0f4c81; }
-  h1 span { color: #1a2332; }
-  .sub { color: #6b7684; font-size: 14px; margin: 4px 0 20px; }
-  .contact { font-size: 13px; color: #47525f; line-height: 1.8; }
-  .contact a { color: #1878c8; text-decoration: none; font-weight: 600; }
+  h1 { font-size: 24px; color: #64aeee; }
+  h1 span { color: #eef3f9; }
+  .sub { color: #96a4b4; font-size: 14px; margin: 4px 0 20px; }
+  .contact { font-size: 13px; color: #c9d3df; line-height: 1.8; }
+  .contact a { color: #64aeee; text-decoration: none; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -34,25 +34,19 @@
 <script>
 const c = document.getElementById('mx'), x = c.getContext('2d');
 const fs = 16; let drops = [];
-function grad(alpha) {
-  const g = x.createLinearGradient(0, 0, c.width, c.height);
-  g.addColorStop(0, 'rgba(13,58,99,' + alpha + ')');
-  g.addColorStop(1, 'rgba(24,120,200,' + alpha + ')');
-  return g;
-}
 function size() {
   c.width = innerWidth; c.height = innerHeight;
   drops = Array(Math.ceil(c.width / fs)).fill(0).map(() => Math.floor(Math.random() * -60));
-  x.fillStyle = grad(1); x.fillRect(0, 0, c.width, c.height);
+  x.fillStyle = '#05080d'; x.fillRect(0, 0, c.width, c.height);
   for (let i = 0; i < 130; i++) draw();
 }
 const chars = 'アイウエオカキクケコサシスセソタチツテト0123456789<>/{}=+*$#';
 function draw() {
-  x.fillStyle = grad(0.14); x.fillRect(0, 0, c.width, c.height);
+  x.fillStyle = 'rgba(5,8,13,0.10)'; x.fillRect(0, 0, c.width, c.height);
   x.font = fs + 'px monospace';
   for (let i = 0; i < drops.length; i++) {
     const ch = chars[Math.floor(Math.random() * chars.length)];
-    x.fillStyle = Math.random() > .975 ? '#ffffff' : 'rgba(214,234,255,0.45)';
+    x.fillStyle = Math.random() > .975 ? '#a8d8ff' : 'rgba(60,145,225,0.6)';
     x.fillText(ch, i * fs, drops[i] * fs);
     if (drops[i] * fs > c.height && Math.random() > .97) drops[i] = 0;
     drops[i]++;
