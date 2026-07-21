@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Bruno Bergamin · Desenvolvimento de Sistemas</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f4c81'/%3E%3Cstop offset='1' stop-color='%231878c8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='45' font-family='Segoe UI,Arial,sans-serif' font-size='36' font-weight='800' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #081120; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  #mx { position: fixed; inset: 0; z-index: 0; }
+  .card { position: relative; z-index: 1; background: #fff; border-radius: 18px; padding: 40px 46px; text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.55); max-width: 420px; }
+  .logo { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg, #0f4c81, #1878c8); color: #fff; font-size: 34px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  h1 { font-size: 24px; color: #0f4c81; }
+  h1 span { color: #1a2332; }
+  .sub { color: #6b7684; font-size: 14px; margin: 4px 0 20px; }
+  .contact { font-size: 13px; color: #47525f; line-height: 1.8; }
+  .contact a { color: #1878c8; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<canvas id="mx"></canvas>
+<div class="card">
+  <div class="logo">B</div>
+  <h1>Bruno <span>Bergamin</span></h1>
+  <div class="sub">Desenvolvimento de sistemas · Boituva/SP</div>
+  <div class="contact">
+    (15) 99694-9451<br>
+    brunoalvesbergamin@gmail.com<br>
+    <a href="https://www.linkedin.com/in/bruno-alves-bergamin-6b711a347">LinkedIn</a>
+  </div>
+</div>
+<script>
+const c = document.getElementById('mx'), x = c.getContext('2d');
+const fs = 16; let drops = [];
+function size() {
+  c.width = innerWidth; c.height = innerHeight;
+  drops = Array(Math.ceil(c.width / fs)).fill(0).map(() => Math.floor(Math.random() * -60));
+  x.fillStyle = '#081120'; x.fillRect(0, 0, c.width, c.height);
+  for (let i = 0; i < 130; i++) draw();
+}
+const chars = 'アイウエオカキクケコサシスセソタチツテト0123456789<>/{}=+*$#';
+function draw() {
+  x.fillStyle = 'rgba(8,17,32,0.10)'; x.fillRect(0, 0, c.width, c.height);
+  x.font = fs + 'px monospace';
+  for (let i = 0; i < drops.length; i++) {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    x.fillStyle = Math.random() > .975 ? '#a8d8ff' : 'rgba(52,140,220,0.55)';
+    x.fillText(ch, i * fs, drops[i] * fs);
+    if (drops[i] * fs > c.height && Math.random() > .97) drops[i] = 0;
+    drops[i]++;
+  }
+}
+size(); addEventListener('resize', size);
+setInterval(draw, 60);
+</script>
+</body>
+</html>
