@@ -7,57 +7,32 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --backdrop: #05080d;
-    --surface: #0e1520;
-    --card: #151f2d;
-    --card2: #1b2736;
-    --mockbar: #0b1119;
-    --border: #263447;
-    --border2: #33445c;
-    --ink: #eef3f9;
-    --body: #c9d3df;
-    --muted: #96a4b4;
-    --brand: #64aeee;
-    --bar: #4da3ff;
-    --chip-blue-bg: #163a57;
-    --chip-blue-fg: #8ec7f7;
-    --green: #3ecf8e;
-    --green-bg: #10291d;
-    --red: #ff8f88;
-    --red-bg: #2a1518;
-    --red-border: #4a2630;
-    --gold: #e8b04a;
-    --gold-bg: #241c0c;
-    --gold-border: #4a3a18;
-    --line: #2b3a4e;
+    --backdrop: #0a2c4e;
+    --surface: #ffffff;
+    --card: #f6f9fc;
+    --card2: #ffffff;
+    --mockbar: #eef2f7;
+    --border: #e3eaf2;
+    --border2: #d7dfe8;
+    --ink: #1a2332;
+    --body: #47525f;
+    --muted: #6b7684;
+    --brand: #0f4c81;
+    --bar: #1878c8;
+    --chip-blue-bg: #e3effb;
+    --chip-blue-fg: #0f4c81;
+    --green: #1d9e6f;
+    --green-bg: #e2f5ec;
+    --red: #c04545;
+    --red-bg: #fdf1f1;
+    --red-border: #f0c9c9;
+    --gold: #b57e17;
+    --gold-bg: #fdf8ef;
+    --gold-border: #f0dcb4;
+    --line: #dde5ee;
   }
   @media print {
-    :root {
-      --backdrop: #ffffff;
-      --surface: #ffffff;
-      --card: #f6f9fc;
-      --card2: #ffffff;
-      --mockbar: #eef2f7;
-      --border: #e3eaf2;
-      --border2: #d7dfe8;
-      --ink: #1a2332;
-      --body: #47525f;
-      --muted: #6b7684;
-      --brand: #0f4c81;
-      --bar: #1878c8;
-      --chip-blue-bg: #e3effb;
-      --chip-blue-fg: #0f4c81;
-      --green: #1d9e6f;
-      --green-bg: #e2f5ec;
-      --red: #c04545;
-      --red-bg: #fdf1f1;
-      --red-border: #f0c9c9;
-      --gold: #b57e17;
-      --gold-bg: #fdf8ef;
-      --gold-border: #f0dcb4;
-      --line: #dde5ee;
-    }
-    body { background: var(--backdrop); padding: 0; }
+    body { background: #ffffff; padding: 0; }
     #mx { display: none; }
     .sheet { border: none; border-radius: 0; box-shadow: none; }
   }
@@ -67,7 +42,7 @@
     -webkit-print-color-adjust: exact; print-color-adjust: exact; background: var(--backdrop); padding: 30px 0 50px;
   }
   #mx { position: fixed; inset: 0; z-index: 0; }
-  .sheet { position: relative; z-index: 1; width: 210mm; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.75); }
+  .sheet { position: relative; z-index: 1; width: 210mm; margin: 0 auto; background: var(--surface); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 70px rgba(3,18,36,.55); }
   .page { width: 100%; padding: 0 0 10mm; }
 
   .topbar { height: 8px; background: linear-gradient(90deg, #0f4c81, #1878c8, #d99a2b); }
@@ -339,25 +314,41 @@
 </div>
 <script>
 const c = document.getElementById('mx'), x = c.getContext('2d');
-const fs = 16; let drops = [];
-function size() {
-  c.width = innerWidth; c.height = innerHeight;
-  drops = Array(Math.ceil(c.width / fs)).fill(0).map(() => Math.floor(Math.random() * -60));
-  x.fillStyle = '#05080d'; x.fillRect(0, 0, c.width, c.height);
-  for (let i = 0; i < 130; i++) draw();
+const chars = ['{', '}', '<', '>', '</>', '/', '=', ';', '+', '*', '0', '1', '$', '#', '(', ')', '[', ']', '&&', '=>'];
+let w, h, cx, cy, parts = [];
+function spawn(init) {
+  return {
+    x: (Math.random() * 2 - 1) * 1100,
+    y: (Math.random() * 2 - 1) * 1100,
+    z: init ? 150 + Math.random() * 850 : 1000,
+    ch: chars[Math.floor(Math.random() * chars.length)]
+  };
 }
-const chars = 'アイウエオカキクケコサシスセソタチツテト0123456789<>/{}=+*$#';
+function size() {
+  w = c.width = innerWidth; h = c.height = innerHeight;
+  cx = w / 2; cy = h / 2;
+  parts = Array.from({ length: 240 }, () => spawn(true));
+  draw();
+}
 function draw() {
-  x.fillStyle = 'rgba(5,8,13,0.10)'; x.fillRect(0, 0, c.width, c.height);
-  x.font = fs + 'px monospace';
-  for (let i = 0; i < drops.length; i++) {
-    const ch = chars[Math.floor(Math.random() * chars.length)];
-    x.fillStyle = Math.random() > .975 ? '#a8d8ff' : 'rgba(60,145,225,0.6)';
-    x.fillText(ch, i * fs, drops[i] * fs);
-    if (drops[i] * fs > c.height && Math.random() > .97) drops[i] = 0;
-    drops[i]++;
+  const g = x.createLinearGradient(0, 0, w, h);
+  g.addColorStop(0, '#082441');
+  g.addColorStop(1, '#11497e');
+  x.fillStyle = g; x.fillRect(0, 0, w, h);
+  x.textAlign = 'center';
+  for (const p of parts) {
+    p.z -= 3;
+    if (p.z <= 70) Object.assign(p, spawn(false));
+    const f = 320 / p.z;
+    const sx = cx + p.x * f, sy = cy + p.y * f;
+    if (sx < -40 || sx > w + 40 || sy < -40 || sy > h + 40) { Object.assign(p, spawn(false)); continue; }
+    const fs = Math.min(26, Math.max(6, 3400 / p.z));
+    const a = Math.min(.9, (1050 - p.z) / 800);
+    x.font = '600 ' + fs + 'px Consolas, monospace';
+    x.fillStyle = p.z < 260 ? 'rgba(255,255,255,' + a + ')' : 'rgba(150,205,255,' + a + ')';
+    x.fillText(p.ch, sx, sy);
   }
 }
 size(); addEventListener('resize', size);
-setInterval(draw, 60);
+setInterval(draw, 40);
 </script>
