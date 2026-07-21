@@ -1,4 +1,6 @@
+<!doctype html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Proposta: Assistente de Vendas com IA">
@@ -122,6 +124,23 @@
 
   footer { margin: 22px 16mm 0; border-top: 1px solid var(--border); padding-top: 12px; font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
   footer b { color: var(--body); }
+
+  @media screen and (max-width: 840px) {
+    body { padding: 12px 10px 30px; }
+    .sheet { width: 100%; border-radius: 12px; }
+    header { padding: 20px 18px 8px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .doc-meta { text-align: left; }
+    .hero { margin: 0 18px 14px; padding: 18px; }
+    .hero h1 { font-size: 18px; }
+    .inner { padding: 0 18px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .mock-wrap { flex-direction: column; }
+    .includes { grid-template-columns: 1fr; }
+    .price-box { flex-direction: column; }
+    .timeline { flex-direction: column; }
+    footer { margin: 18px 18px 0; flex-direction: column; gap: 6px; }
+    footer div { text-align: left !important; }
+  }
 </style>
 
 <canvas id="mx"></canvas>
